@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pommr</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background: #f4f4f9; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+        h2 { color: #333; }
+        .upload-section { border-bottom: 2px solid #eee; margin-bottom: 20px; padding-bottom: 20px; }
+        .download-list { text-align: left; }
+        .file-item { display: flex; justify-content: space-between; align-items: center; background: #fafafa; padding: 10px; margin: 5px 0; border-radius: 6px; border: 1px solid #ddd; }
+        .btn-download { background: #28a745; color: white; text-decoration: none; padding: 5px 12px; border-radius: 4px; font-size: 14px; }
+        input[type="file"] { margin: 15px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Pommr</h2>
+
+    <div class="upload-section">
+        <p><strong>Admin:</strong> Upload HTML File</p>
+        <input type="file" id="fileInput" accept=".html">
+        <button onclick="handleUpload()">Add to Downloads</button>
+    </div>
+
+    <div class="download-list">
+        <p><strong>Available Downloads On Pommr:</strong></p>
+        <div id="fileContainer">
+            </div>
+    </div>
+</div>
+
+<script>
+    function handleUpload() {
+        const input = document.getElementById('fileInput');
+        const container = document.getElementById('fileContainer');
+        
+        if (input.files.length === 0) {
+            alert("Please select an HTML file first.");
+            return;
+        }
+
+        const file = input.files[0];
+        const fileURL = URL.createObjectURL(file);
+
+        // Create the download row
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        fileItem.innerHTML = `
+            <span>${file.name}</span>
+            <a href="${fileURL}" download="${file.name}" class="btn-download">Download</a>
+        `;
+
+        container.appendChild(fileItem);
+        
+        // Reset input
+        input.value = "";
+    }
+</script>
+
+</body>
+</html>
